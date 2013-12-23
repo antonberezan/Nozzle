@@ -44,12 +44,12 @@ The chaining method that defines a new binding with the specified name.
 injector.bind( name );
 ```
 
-+ **`name`**<br />
-Type: _String_<br />
++ `name` <br />
+Type: _String_ <br />
 The name of the binding.
 
-+ **`result`**<br />
-Type: _Function_<br />
++ `result` <br />
+Type: _Function_ <br />
 The next method `to` from the chain.
 
 #### to
