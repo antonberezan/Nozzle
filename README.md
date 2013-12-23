@@ -47,11 +47,10 @@ injector.bind( name );
 ```
 
 + **`name`**
+Type: _String_
+The name of the binding.
 
-	Type: _String_
-	The name of the binding.
-
-+ `Result`
++ **`Result`**
 
 	Type: _Function_
 	The next method `to` from the chain.
