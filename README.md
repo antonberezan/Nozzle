@@ -46,13 +46,13 @@ The chaining method that defines a new binding with the specified name.
 injector.bind( name );
 ```
 
-**name**
++ `name`
 
 	Type: _String_
 
 	The name of the binding.
 
-**Returns**
++ `Result`
 
 	Type: _Function_
 
