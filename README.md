@@ -38,7 +38,7 @@ define( ['Nozzle'], function( Nozzle ) {
 
 ### bind
 
-The chaining method that defines a new binding with a specified name.
+The chaining method that defines a new binding with the specified name.
 
 ##### Syntax
 
@@ -46,8 +46,12 @@ The chaining method that defines a new binding with a specified name.
 injector.bind( name );
 ```
 
-+ `name` - **Type:** _String_ - the name of the binding.
-+ `Result` - **Type:** _Function_ - the result of the method is a next method `to` from the chain.
+**name**
+	Type: _String_
+	The name of the binding.
+**Returns:**
+	Type: _Function_
+	The result of the method is the next method `to` from the chain.
 
 #### to
 
