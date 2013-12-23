@@ -40,8 +40,6 @@ define( ['Nozzle'], function( Nozzle ) {
 
 The chaining method that defines a new binding with the specified name.
 
-##### Syntax
-
 ```js
 injector.bind( name );
 ```
@@ -50,7 +48,7 @@ injector.bind( name );
 Type: _String_<br />
 The name of the binding.
 
-+ **`Result`**<br />
++ **`result`**<br />
 Type: _Function_<br />
 The next method `to` from the chain.
 
