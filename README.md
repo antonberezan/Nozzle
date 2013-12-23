@@ -6,7 +6,7 @@ A dependency injector for JavaScript.
 
 ## Constructor
 
-The constructor takes 1 optional argument - resolver. The argument is a function that resolves a dependency
+The constructor takes 1 optional argument - resolver. The argument is a function that resolves a dependency.
 
 ``` js
 Nozzle( resolver? );
@@ -32,6 +32,7 @@ define( ['Nozzle'], function( Nozzle ) {
 (function () {
 	var injector = new Nozzle();
 }());
+```
 
 ## Methods
 
@@ -46,7 +47,7 @@ injector.bind( name );
 ```
 
 + `name` - **Type:** _String_ - the name of the binding.
-+ `Result` - **Type:** _Function - the result of the method is a next method `to` from the chain.
++ `Result` - **Type:** _Function_ - the result of the method is a next method `to` from the chain.
 
 #### to
 
