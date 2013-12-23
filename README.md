@@ -47,10 +47,15 @@ injector.bind( name );
 ```
 
 **name**
+
 	Type: _String_
+
 	The name of the binding.
-**Returns:**
+
+**Returns**
+
 	Type: _Function_
+
 	The result of the method is the next method `to` from the chain.
 
 #### to
