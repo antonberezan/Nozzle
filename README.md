@@ -50,10 +50,8 @@ injector.bind( name );
 Type: _String_<br />
 The name of the binding.
 
-+ **`Result`**
-
-Type: _Function_
-
++ **`Result`**<br />
+Type: _Function_<br />
 The next method `to` from the chain.
 
 #### to
