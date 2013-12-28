@@ -46,7 +46,7 @@ There are two types of factories: just a function and an array with dependency n
 var simpleFactory = function() {
 	return { ... }
 };
-
+// factory that require dependencies
 var dependentFactory = [ 'dep1', 'dep2', 'depN', function( dep1, dep2, depN ) { ... } ];
 ```
 
@@ -86,30 +86,14 @@ The next part of the chain.
 Associates the specified factory with the binding.
 
 ```js
-injector.bind( 'name' ).to( function() { return { ... }; } );
-injector.bind( 'name' ).to( [ 'dep1', 'depN', function( dep1, dep2, depN ) { return { ... }; } ] );
+// define a new binding to a simple factory function.
+injector.bind( 'name1' ).to( function() { return { ... }; } );
+// define a new binding to a factory function with dependencies.
+injector.bind( 'name2' ).to( [ 'dep1', 'depN', function( dep1, dep2, depN ) { return { ... }; } ] );
 ```
 
 + `factory` <br />
 Type: _[Factory](#factory)_ <br />
-The function of the factory which will be invoked on each request.
-+ `result` <br />
-Type: _Function_ <br />
-The next part of the chain.
-
-#### to( [ dependency1 [, dependencyN], factory ] )
-
-Associates the specified factory with the binding.
-
-```js
-injector.bind( 'name' ).to( [ 'dep1', 'depN', function( dep1, dep2, depN ) { return { ... }; } ] );
-```
-
-+ `dependency1, dependencyN ...` <br />
-Type: _String_ <br />
-The name of the dependency that will be injected to the `factory`. The dependency should be defined in the current injector instance.
-+ `factory` <br />
-Type: _Function_ <br />
 The function of the factory which will be invoked on each request.
 + `result` <br />
 Type: _Function_ <br />
@@ -192,7 +176,7 @@ injector.invoke( factory );
 ```
 
 + `factory` <br />
-Type: _Factory_ <br />
+Type: _[Factory](#factory)_ <br />
 The factory object.
 + `result` <br />
 Returns the result of the factory function.
@@ -212,8 +196,8 @@ injector.invoke( factory, function( name ) { ... } );
 ```
 
 + `factory` <br />
-Type: _Factory_ <br />
-The factory object.
+Type: _[Factory](#factory)_ <br />
+The factory.
 + `resolver` <br />
 Type: _Function_ <br />
 The function that takes one argument - the name of the required dependency. The result must be an instance of the required dependency.
@@ -246,11 +230,11 @@ injector.instantiate( 'name', factory );
 ```
 
 + `name` <br />
-Type: String_ <br />
+Type: _String_ <br />
 The binding name.
 + `factory` <br />
-Type: _Factory_ <br />
-The factory object.
+Type: _[Factory](#factory)_ <br />
+The factory.
 + `result` <br />
 An instance of the specified binding.
 
