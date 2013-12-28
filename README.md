@@ -113,7 +113,7 @@ injector.bind( 'name' ).to( { ... } ).singleton();
 
 ```js
 // define a new binding to a factory with dependencies.
-injector.bind( 'name' ).to( [ 'dep1', 'depN', function( dep1, depN ) { return { ... }; } ] ).singleton();
+injector.bind( 'name' ).to( [ 'depN', function( depN ) { return { ... }; } ] ).singleton();
 ```
 
 ### get( name )
@@ -221,7 +221,7 @@ var getAnimal = function( name ) {
 injector.invoke( [ 'cat', 'dog', function( cat, dog ) { return { ... }; } ], resolve );
 ```
 
-### instantiate
+### instantiate()
 
 Defines a new binding and immediately instantiates it by the specified name and factory.
 
@@ -273,7 +273,7 @@ injector.remove( [ 'name1', 'name2', 'nameN' ] );
 Type: _Array_ <br />
 The array of names of the removed bindings.
 
-### clear
+### clear()
 
 Removes all defined bindings.
 
