@@ -2,8 +2,6 @@
 
 A dependency injector for JavaScript.
 
-# API
-
 ## Constructor
 
 The constructor takes 1 optional argument - resolver. The argument is a function that resolves a dependency.
@@ -83,7 +81,7 @@ An instance of the required binding.
 **Example:**
 
 ```js
-injector.bind( 'appInfo' ).to( function() {
+injector.bind( 'appInfo' ).provider( function() {
 	return {
 		appName: 'MyApp',
 		version: '1.0.3'
@@ -111,8 +109,8 @@ An array of the instances.
 **Example:**
 
 ```js
-injector.bind( 'cat' ).to( function() { ... } );
-injector.bind( 'dog' ).to( function() { ... } );
+injector.bind( 'cat' ).type( Cat );
+injector.bind( 'dog' ).type( Dog );
 
 var animals = injector.get( [ 'cat', 'dog' ] );
 ```
@@ -171,7 +169,7 @@ var getAnimal = function( name ) {
 injector.invoke( [ 'cat', 'dog', function( cat, dog ) { return { ... }; } ], resolve );
 ```
 
-### instantiate()
+### instantiate( name, factory )
 
 Defines a new binding and immediately instantiates it by the specified name and factory.
 
@@ -231,11 +229,11 @@ Removes all defined bindings.
 injector.clear();
 ```
 
-## InjectorBinding
+# InjectorBinding
 
-### Methods
+## Methods
 
-#### value( value )
+### value( value )
 
 Associates the specified value with the binding.
 
@@ -249,7 +247,7 @@ The binding value.
 Type: _[InjectorBinding](#injectorbinding)_ <br />
 The current binding.
 
-#### type( type )
+### type( type )
 
 Associates the specified type with the binding. The type is a function that will be instantiated by the 'new' keyword.
 
@@ -278,7 +276,7 @@ var car  = injector.get( 'car' );
 console.log( car.Make, car.Model ); // Chevrolet Camaro
 ```
 
-#### provider( factory )
+### provider( factory )
 
 Associates the specified provider with the binding.
 
@@ -296,14 +294,14 @@ The current binding.
 
 ```js
 // define a new binding to a simple factory function.
-injector.bind( 'foo' ).to( function() { return { ... }; } );
+injector.bind( 'foo' ).provider( function() { return { ... }; } );
 // define a new binding to a factory function with dependencies.
-injector.bind( 'bar' ).to( [ 'foo', function( foo ) { return { ... }; } ] );
+injector.bind( 'bar' ).provider( [ 'foo', function( foo ) { return { ... }; } ] );
 ```
 
-#### singleton()
+### singleton()
 
-Set indication that the current binding must be instantiated only once.
+Set the current binding as sigleton. The kind of binding is instantiated only once when the binding will be required.
 
 **Example:** _Define a new binding to the type as sigleton._
 
@@ -315,10 +313,10 @@ injector.bind( 'car' ).type( Camaro ).singleton();
 
 ```js
 // define a new binding to a factory with dependencies.
-injector.bind( 'bar' ).to( [ 'foo', function( foo ) { return { ... }; } ] ).singleton();
+injector.bind( 'bar' ).provider( [ 'foo', function( foo ) { return { ... }; } ] ).singleton();
 ```
 
-#### resolve()
+### resolve()
 
 Instantiates and returns the associated value of the binding.
 
