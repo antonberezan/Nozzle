@@ -36,17 +36,16 @@ define( ['Nozzle'], function( Nozzle ) {
 }());
 ```
 
-## Types
+## Factory
 
-### Factory
-
-There are two types of factories: just a function and an array with dependency names and with a function that must be a latest item in the array.
+There are two notations of factories: just a function and array. The array is a collection of the required bindings where the latest item in the array is a factory function. See the examples below.
 
 ```js
+// a simple factory function without any dependency
 var simpleFactory = function() {
 	return { ... }
 };
-// factory that require dependencies
+// a factory that require dependencies
 var dependentFactory = [ 'dep1', 'dep2', 'depN', function( dep1, dep2, depN ) { ... } ];
 ```
 
@@ -54,7 +53,7 @@ var dependentFactory = [ 'dep1', 'dep2', 'depN', function( dep1, dep2, depN ) { 
 
 ### bind( name )
 
-The chaining method that defines a new binding with the specified name.
+Defines a new binding with the specified name.
 
 ```js
 injector.bind( 'name' );
@@ -64,57 +63,8 @@ injector.bind( 'name' );
 Type: _String_ <br />
 The name of the binding.
 + `result` <br />
-Type: _Function_ <br />
-The next method `to` from the chain.
-
-#### to( instance )
-
-Associates the specified instance with the binding. Any type will be treated as singleton except Function type.
-
-```js
-injector.bind( 'name' ).to( instance );
-```
-+ `instance` <br />
-Type: _Any Type except Function_ <br />
-The instance of the object for the binding.
-+ `result` <br />
-Type: _Function_ <br />
-The next part of the chain.
-
-#### to( factory )
-
-Associates the specified factory with the binding.
-
-```js
-// define a new binding to a simple factory function.
-injector.bind( 'name1' ).to( function() { return { ... }; } );
-// define a new binding to a factory function with dependencies.
-injector.bind( 'name2' ).to( [ 'dep1', 'depN', function( dep1, dep2, depN ) { return { ... }; } ] );
-```
-
-+ `factory` <br />
-Type: _[Factory](#factory)_ <br />
-The function of the factory which will be invoked on each request.
-+ `result` <br />
-Type: _Function_ <br />
-The next part of the chain.
-
-#### singleton()
-
-Associates the specified factory with the binding as singleton. That kind of binding is instantiated only once when it will be requested for first time. This is the latest part of the chain.
-
-**Example:** _Define a new binding to the existing object as sigleton._
-
-```js
-injector.bind( 'name' ).to( { ... } ).singleton();
-```
-
-**Example:** _Define a new binding to the factory with dependencies as sigleton._
-
-```js
-// define a new binding to a factory with dependencies.
-injector.bind( 'name' ).to( [ 'depN', function( depN ) { return { ... }; } ] ).singleton();
-```
+Type: _[InjectorBinding](#injectorbinding)_ <br />
+A new instance of the binding. See [InjectorBinding](#injectorbinding).
 
 ### get( name )
 
@@ -279,4 +229,109 @@ Removes all defined bindings.
 
 ```js
 injector.clear();
+```
+
+## InjectorBinding
+
+### Methods
+
+#### value( value )
+
+Associates the specified value with the binding.
+
+```js
+injector.bind( 'foo' ).value( { bar: 'bar' } );
+```
++ `value` <br />
+Type: _Any Type_ <br />
+The binding value.
++ `result` <br />
+Type: _[InjectorBinding](#injectorbinding)_ <br />
+The current binding.
+
+#### type( type )
+
+Associates the specified type with the binding. The type is a function that will be instantiated by the 'new' keyword.
+
+```js
+injector.bind( 'MyType' ).value( MyType );
+```
+
++ `type` <br />
+Type: _Type_ <br />
+The factory.
++ `result` <br />
+Type: _[InjectorBinding](#injectorbinding)_ <br />
+The current binding.
+
+**Example:**
+
+```js
+var Camaro = function() {
+	this.Make = 'Chevrolet';
+	this.Model = 'Camaro';
+};
+
+injector.bind( 'car' ).type( Camaro );
+
+var car  = injector.get( 'car' );
+console.log( car.Make, car.Model ); // Chevrolet Camaro
+```
+
+#### provider( factory )
+
+Associates the specified provider with the binding.
+
+```js
+injector.bind( 'provider' ).value( myProvider );
+```
+
++ `factory` <br />
+Type: _[Factory](#factory)_ <br />
+The factory.
++ `result` <br />
+Type: _[InjectorBinding](#injectorbinding)_ <br />
+The current binding.
+**Example:**
+
+```js
+// define a new binding to a simple factory function.
+injector.bind( 'foo' ).to( function() { return { ... }; } );
+// define a new binding to a factory function with dependencies.
+injector.bind( 'bar' ).to( [ 'foo', function( foo ) { return { ... }; } ] );
+```
+
+#### singleton()
+
+Set indication that the current binding must be instantiated only once.
+
+**Example:** _Define a new binding to the type as sigleton._
+
+```js
+injector.bind( 'car' ).type( Camaro ).singleton();
+```
+
+**Example:** _Define a new binding to the factory with dependencies as sigleton._
+
+```js
+// define a new binding to a factory with dependencies.
+injector.bind( 'bar' ).to( [ 'foo', function( foo ) { return { ... }; } ] ).singleton();
+```
+
+#### resolve()
+
+Instantiates and returns the associated value of the binding.
+
+```js
+binding.resolve();
+```
+
++ `result` <br />
+Type: _Object_ <br />
+The value of the binding.
+
+**Example:**
+
+```js
+var car = injector.bind( 'car' ).type( Camaro ).resolve();
 ```
